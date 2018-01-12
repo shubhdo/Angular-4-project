@@ -1,0 +1,37 @@
+<label class="date-label"> Select Date</label>
+<input matInput [matDatepicker]="picker" placeholder="Choose a date" [(ngModel)]="date" (ngModelChange)="fetchUsersDate()">
+<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+<mat-datepicker #picker></mat-datepicker>
+<button class="btn" (click)="fetchAllUsers()">View All</button>
+<div class="table-responsive" style="margin-top:10px">
+  <table class="table table-striped">
+    <tr class="thead-default">
+      <th (click)="sort('_id')">Customer Id
+        <span class="glyphicon sort-icon" *ngIf="key =='gargeonID'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+      </th>
+      <th (click)="sort('phone')">Contact Phone
+        <span class="glyphicon sort-icon" *ngIf="key =='phone'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+      </th>
+      <th (click)="sort('address')">Location
+        <span class="glyphicon sort-icon" *ngIf="key =='address'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+      </th>
+      <th (click)="sort('email')">Email Address
+        <span class="glyphicon sort-icon" *ngIf="key =='email'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+      </th>
+      <th>Pickup Type</th>
+      <th>Business Name</th>
+      <th>Verfication</th>
+    </tr>
+    <tr *ngFor="let data of listData| orderBy: key : reverse | paginate: { itemsPerPage: 10, currentPage: p }">
+      <th>{{data._id}}</th>
+      <td>{{data.phone}}</td>
+      <td>{{data.address}}</td>
+      <td>{{data.email}}</td>
+      <td>{{data.pickupType}}</td>
+      <td>{{data.businessName}}</td>
+      <td>{{data.phoneVerified?"Verified":"Pending"}}</td>
+
+    </tr>
+
+  </table>
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>

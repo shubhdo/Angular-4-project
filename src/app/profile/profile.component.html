@@ -1,0 +1,138 @@
+<div class="container-fluid">
+  <div class="col-sm-12 top-header">
+
+    <div class="col-sm-6 right-top">
+
+    </div>
+  </div>
+  <div class="col-sm-12">
+    <div class="change-pass-bor view-user clearfix">
+
+      <div class="tab-content col-sm-8 col-sm-offset-3" align="center">
+        <div id="home" class="tab-pane fade in active">
+          <div class="form-group clearfix">
+            <div class="col-sm-12">
+              <div class="profile-img text-center new-profile">
+                <div class="proimg-block">
+                  <img src="{{adminData.profilePic}}" width="150" style="border-radius: 50%" id="OpenImgUpload">
+                  <input type="file" accept="image/*" (change)="fileChangeEvent($event)" value="Image" placeholder="Change your image">
+
+                </div>
+                <div class="button-save">
+                  <button class="btn btn-primary" (click)="changeImage()" (disabled)="data.img">Update Profile Pic
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <form class="form-horizontal common-form" name="myForm1" #editProfile="ngForm">
+
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Full Name</label>
+              <div class="col-sm-6">
+
+                <input name="FullName" class="form-control" [(ngModel)]="adminData.username" #username="ngModel" placeholder="Full Name"
+                />
+                <div *ngIf="username.invalid && (username.dirty || username.touched)" class="alert alert-danger">
+
+                  <div *ngIf="username.errors.required">
+                    FullName is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Email</label>
+              <div class="col-sm-6">
+                <input type="email" name="email" class="form-control" #email="ngModel" [(ngModel)]="adminData.email" placeholder="Email"
+                  readonly>
+                <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
+
+                  <div *ngIf="email.errors.required">
+                    Email is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Phone Number</label>
+              <div class="col-sm-6">
+                <input type="tel" name="PhoneNumber" class="form-control" #phone="ngModel" [(ngModel)]="adminData.phone" placeholder="Phone Number"
+                  maxlength="16" required/>
+                <div *ngIf="phone.invalid && (phone.dirty || phone.touched)" class="alert alert-danger">
+
+                  <div *ngIf="phone.errors.required">
+                    Phone is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="form-group">
+              <div class="col-xs-12 text-center">
+                <button (disabled)="editProfile.invalid" class="btn btn-primary" style="margin-top: 20px" (click)="clicked()">
+                  Update
+                </button>
+              </div>
+            </div>
+          </form>
+
+        </div>
+        <div class="text-center">
+          <button class="btn btn-primary" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" [routerLink]="['/changePassword']">Change Password
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="pofile-update-bottom">
+    <div class="col-sm-8 col-sm-offset-3">
+      <div class="row">
+        <div class="col-sm-6">
+          <h4>Pickup Type Update</h4>
+          <ul>
+            <li *ngFor="let types of pickupType">{{types}}
+              <button class="pull-right" (click)="deletePickyptype(types)">
+                <span class="glyphicon glyphicon-remove"></span>
+              </button>
+            </li>
+          </ul>
+          <form>
+            <input type="text" *ngIf="show_pickuptype" name="pickupType" class="form-control mgb-10" [(ngModel)]="obj1.pickupType" #pickupType="ngModel"
+              required>
+
+          </form>
+
+          <div class="common-button center">
+            <button class="btn btn-primary add" (click)="addPickyptype()" (disabled)="obj1.pickupType">Add Type</button>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <h4>Recycle Waste Type</h4>
+          <ul>
+            <li *ngFor="let types of recyclewastetype">{{types}}
+              <button class="pull-right" (click)="deleteRecyclewastetype(types)">
+                <span class="glyphicon glyphicon-remove"></span>
+              </button>
+            </li>
+          </ul>
+          <form>
+            <input type="text" *ngIf="show_recyclewastetype" class="form-control mgb-10" name="recyclewastetype" [(ngModel)]="obj1.wasteType"
+              #recyclewastetype="ngModel" required>
+
+          </form>
+
+          <div class="common-button center">
+            <button class="btn btn-primary add" (click)="addRecyclewastetype()" (disabled)="obj1.wasteType">Add Type</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

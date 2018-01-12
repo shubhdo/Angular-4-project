@@ -1,0 +1,233 @@
+<label class="date-label"> Select Date</label>
+<input matInput [matDatepicker]="picker" placeholder="Choose a date" [(ngModel)]="date" (ngModelChange)="fetchHaulersDate()">
+<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+<mat-datepicker #picker></mat-datepicker>
+<button class="btn" (click)="fetchAllHaulers()">View All</button>
+<button class="btn pull-right btn-green" (click)="myModal.open()">Add Hauler</button>
+
+<div class="table-responsive" style="margin-top:10px">
+  <table class="table table-striped">
+    <tr class="thead-default">
+      <th (click)="sort('username')">Hauler Name
+        <span class="glyphicon sort-icon" *ngIf="key =='username'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+      </th>
+      <th (click)="sort('haulerId')">Hauler Id
+        <span class="glyphicon sort-icon" *ngIf="key =='haulerId'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+
+      </th>
+      <th (click)="sort('licenseNumber')">License Number
+        <span class="glyphicon sort-icon" *ngIf="key =='licenseNumber'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+
+      </th>
+      <th (click)="sort('phone')">Contact Phone
+        <span class="glyphicon sort-icon" *ngIf="key =='phone'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+
+      </th>
+      <th (click)="sort('Corporation')">Corporations
+        <span class="glyphicon sort-icon" *ngIf="key =='Corporation'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+
+      </th>
+      <th (click)="sort('truckPlate')">Truck Info & Type
+        <span class="glyphicon sort-icon" *ngIf="key =='truckPlate'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+
+      </th>
+      <th (click)="sort('maxLoad')">Max truck load weight
+        <span class="glyphicon sort-icon" *ngIf="key =='maxLoad'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+
+      </th>
+    </tr>
+    <tr *ngFor="let data of listData| orderBy: key : reverse | paginate: { itemsPerPage: 10, currentPage: p }">
+      <th>{{data.username}}</th>
+      <th>{{data.haulerId}}</th>
+      <td>{{data.licenseNumber}}</td>
+      <td>{{data.phone}}</td>
+      <td>{{data.Corporation}}</td>
+      <td>{{data.truckPlate}}</td>
+      <td>{{data.maxLoad}}</td>
+
+    </tr>
+
+  </table>
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+
+  <modal #myModal>
+    <modal-header>
+      <h1 class="heading-center">Add new Hauler detail</h1>
+    </modal-header>
+    <modal-content>
+      <div class="modal-body">
+
+        <form name="addHauler" autocomplete="off" #addHauler="ngForm">
+
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-4">
+                <label>Name</label>
+              </div>
+              <div class="col-sm-8">
+
+                <input type="text" name="username" required [(ngModel)]="obj.username" minlength="4" class="form-control" #username="ngModel"
+                  pattern="[a-zA-Z]*">
+                <div *ngIf="username.invalid && (username.dirty || username.touched)" class="alert alert-danger">
+
+                  <div *ngIf="username.errors.required">
+                    Username is required.
+                  </div>
+                  <div *ngIf="username.errors.minlength">
+                    Username must be at least 4 characters long.
+                  </div>
+                  <div *ngIf="username.errors.pattern">
+                    Username must contain alphabets.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-4">
+                <label>Hauler ID</label>
+              </div>
+              <div class="col-sm-8">
+
+
+                <input type="text" name="haulerId" required [(ngModel)]="obj.haulerId" minlength="4" class="form-control" #haulerId="ngModel">
+                <div *ngIf="haulerId.invalid && (haulerId.dirty || haulerId.touched)" class="alert alert-danger">
+
+                  <div *ngIf="haulerId.errors.required">
+                    HaulerId is required.
+                  </div>
+                  <div *ngIf="haulerId.errors.minlength">
+                    HaulerId must be at least 4 characters long.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-4">
+                <label>Truck License</label>
+              </div>
+              <div class="col-sm-8">
+
+                <input type="text" name="licenseNumber" required [(ngModel)]="obj.licenseNumber" minlength="4" class="form-control" #licenseNumber="ngModel">
+                <div *ngIf="licenseNumber.invalid && (licenseNumber.dirty || licenseNumber.touched)" class="alert alert-danger">
+
+                  <div *ngIf="licenseNumber.errors.required">
+                    License Number is required.
+                  </div>
+                  <div *ngIf="licenseNumber.errors.minlength">
+                    License Number must be at least 4 characters long.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-4">
+                <label>Truck Plate</label>
+              </div>
+              <div class="col-sm-8">
+
+
+                <input type="text" name="truckPlate" required [(ngModel)]="obj.truckPlate" #truckPlate="ngModel" minlength="4" class="form-control">
+                <div *ngIf="truckPlate.invalid && (truckPlate.dirty || truckPlate.touched)" class="alert alert-danger">
+
+                  <div *ngIf="truckPlate.errors.required">
+                    Truck Plate is required.
+                  </div>
+                  <div *ngIf="truckPlate.errors.minlength">
+                    Truck Plate must be at least 4 characters long.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-4">
+                <label>Contact no</label>
+              </div>
+              <div class="col-sm-8">
+
+
+
+                <input type="text" name="phone" required [(ngModel)]="obj.phone" #phone="ngModel" class="form-control" pattern="\+(9[976]\d|8[987530]\d|6[987]\d|5[90]\d|42\d|3[875]\d|
+                        2[98654321]\d|9[8543210]|8[6421]|6[6543210]|5[87654321]|
+                        4[987654310]|3[9643210]|2[70]|7|1)\d{1,14}$">
+                <div *ngIf="phone.invalid && (phone.dirty || phone.touched)" class="alert alert-danger">
+
+                  <div *ngIf="phone.errors.required">
+                    Phone is required.
+                  </div>
+                  <div *ngIf="phone.errors.pattern">
+                    Please enter number with country code.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-4">
+                <label>Max load weight</label>
+              </div>
+              <div class="col-sm-8">
+
+
+                <input type="number" name="maxLoad" required [(ngModel)]="obj.maxLoad" #maxLoad="ngModel" class="form-control" pattern="\d+">
+                <div *ngIf="maxLoad.invalid && (maxLoad.dirty || maxLoad.touched)" class="alert alert-danger">
+
+                  <div *ngIf="maxLoad.errors.required">
+                    Max Load is required.
+                  </div>
+                  <div *ngIf="maxLoad.errors.pattern">
+                    Max Load must be a Number and greater than zero
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-4">
+                <label>Corporation</label>
+              </div>
+              <div class="col-sm-8">
+
+                <input type="text" name="Corporation" required [(ngModel)]="obj.Corporation" #Corporation="ngModel" minlength="4" class="form-control"
+                  pattern="^[A-Za-z].*[a-zA-Z]$">
+                <div *ngIf="Corporation.invalid && (Corporation.dirty || Corporation.touched)" class="alert alert-danger">
+
+                  <div *ngIf="Corporation.errors.required">
+                    Corporation is required.
+                  </div>
+                  <div *ngIf="Corporation.errors.minlength">
+                    Corporation must be at least 4 characters long.
+                  </div>
+                  <div *ngIf="Corporation.errors.pattern">
+                    Corporation must be vaild.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="button center">
+
+            <input type="submit" [disabled]="addHauler.form.invalid" class="btn btn-primary" (click)="add();myModal.close() " value="Submit"
+              data-dismiss="modal">
+          </div>
+        </form>
+      </div>
+    </modal-content>
+    
+  </modal>

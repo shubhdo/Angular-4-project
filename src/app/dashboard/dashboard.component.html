@@ -1,0 +1,28 @@
+<h1>
+  <b>Welcome Admin!!</b>
+</h1>
+<br> Here's the gargeon data for today
+<br>
+<br>
+
+<div class="row">
+
+  <div class="col-md-6">
+    <h2>Post Data </h2>
+    Total Post : {{listData.length}}
+    <b>View User</b>
+    <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [colors]="lineChartColors"
+      [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+
+    </canvas>
+  </div>
+  <div class="col-md-6">
+    <h2>User Data </h2>
+    Total Signed-up User : {{displayData.length}}
+    <b (click)="go()">View User</b>
+    <canvas baseChart [datasets]="barChartDataUser" [labels]="barChartLabels" [options]="barUserChartOptions" [legend]="barChartLegend"
+      [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+
+    </canvas>
+  </div>
+</div>
